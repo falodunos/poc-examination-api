@@ -3,10 +3,9 @@ package com.etz.pocexaminationapi.pocexaminationapi.payload;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
-public class PostDto {
+public class ExamDto {
     private long id;
     private String name;
     private String description;

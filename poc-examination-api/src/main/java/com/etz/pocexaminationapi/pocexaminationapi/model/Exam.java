@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,9 +13,9 @@ import java.util.List;
 
 @Entity
 @Table(
-        name = "creates", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}
+        name = "Exam", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}
 )
-public class Post {
+public class Exam {
 
     @Id
     @GeneratedValue(
@@ -27,7 +26,7 @@ public class Post {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "description", nullable = false)
+    @Column(columnDefinition = "TEXT",name = "description", nullable = false)
     private String description;
 
     @Column(name = "code", nullable = false)
