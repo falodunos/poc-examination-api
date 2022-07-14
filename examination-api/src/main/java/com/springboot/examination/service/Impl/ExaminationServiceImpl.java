@@ -1,13 +1,12 @@
-package com.springboot.examination.Service.Impl;
+package com.springboot.examination.service.Impl;
 
-import com.springboot.examination.Model.Examination;
-import com.springboot.examination.Payload.ExaminationDto;
-import com.springboot.examination.Repository.ExaminationRepository;
-import com.springboot.examination.Service.ExaminationService;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import com.springboot.examination.exception.ExaminationException;
+import com.springboot.examination.model.Examination;
+import com.springboot.examination.payload.ExaminationDto;
+import com.springboot.examination.repository.ExaminationRepository;
+import com.springboot.examination.service.ExaminationService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,13 +38,13 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     @Override
     public ExaminationDto getRecordById(long id) {
-        Examination examination = examinationRepository.findById(id).orElseThrow(() -> new RuntimeException("Examination"));
+        Examination examination = examinationRepository.findById(id).orElseThrow(() -> new ExaminationException(HttpStatus.BAD_REQUEST, "Id does not exist"));
         return mapToDto(examination);
     }
 
     @Override
     public ExaminationDto updateRecordByID(long id, ExaminationDto examinationDto) {
-        Examination examination = examinationRepository.findById(id).orElseThrow(() -> new RuntimeException("Examination"));
+        Examination examination = examinationRepository.findById(id).orElseThrow(() -> new ExaminationException(HttpStatus.BAD_REQUEST, "Id does not exist"));
 
         examination.setName(examination.getName());
         examination.setDescription(examinationDto.getDescription());
@@ -62,13 +61,14 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     @Override
     public void deleteRecordByID(long id) {
-        Examination examination = examinationRepository.findById(id).orElseThrow(() -> new RuntimeException("Examination"));
+        Examination examination = examinationRepository.findById(id).orElseThrow(() -> new ExaminationException(HttpStatus.BAD_REQUEST, "Id does not exist"));
         examinationRepository.delete(examination);
     }
 
     //  convert from dto to entity
     private Examination mapToEntity(ExaminationDto examinationDto) {
         Examination examination = new Examination();
+        examination.setId(examinationDto.getId());
         examination.setName(examinationDto.getName());
         examination.setDescription(examinationDto.getDescription());
         examination.setCode(examinationDto.getCode());
@@ -83,6 +83,7 @@ public class ExaminationServiceImpl implements ExaminationService {
 //  convert from entity to dto
     private ExaminationDto mapToDto(Examination examination) {
         ExaminationDto examinationDto = new ExaminationDto();
+        examinationDto.setId(examination.getId());
         examinationDto.setName(examination.getName());
         examinationDto.setDescription(examination.getDescription());
         examinationDto.setCode(examination.getCode());

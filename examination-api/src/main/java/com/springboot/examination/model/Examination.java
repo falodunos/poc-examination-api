@@ -1,11 +1,10 @@
-package com.springboot.examination.Model;
+package com.springboot.examination.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -22,7 +21,7 @@ public class Examination {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable = false)

@@ -1,9 +1,7 @@
-package com.springboot.examination.Controller;
+package com.springboot.examination.controller;
 
-import com.springboot.examination.Payload.ExaminationDto;
-import com.springboot.examination.Service.ExaminationService;
-import com.springboot.examination.Service.Impl.ExaminationServiceImpl;
-import org.apache.coyote.Response;
+import com.springboot.examination.payload.ExaminationDto;
+import com.springboot.examination.service.ExaminationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

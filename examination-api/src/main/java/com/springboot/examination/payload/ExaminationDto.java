@@ -1,8 +1,6 @@
-package com.springboot.examination.Payload;
+package com.springboot.examination.payload;
 
 import lombok.Data;
-
-import java.time.LocalDate;
 
 @Data
 public class ExaminationDto {

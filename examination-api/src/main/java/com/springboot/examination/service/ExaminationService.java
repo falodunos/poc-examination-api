@@ -1,7 +1,6 @@
-package com.springboot.examination.Service;
+package com.springboot.examination.service;
 
-import com.springboot.examination.Model.Examination;
-import com.springboot.examination.Payload.ExaminationDto;
+import com.springboot.examination.payload.ExaminationDto;
 
 import java.util.List;
 
