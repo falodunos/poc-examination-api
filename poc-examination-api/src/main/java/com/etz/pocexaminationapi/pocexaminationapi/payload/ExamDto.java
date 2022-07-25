@@ -1,8 +1,16 @@
 package com.etz.pocexaminationapi.pocexaminationapi.payload;
 
+import com.etz.pocexaminationapi.pocexaminationapi.annotations.CustomDateConstraint;
+//import com.etz.pocexaminationapi.pocexaminationapi.annotations.LevelsIdConstraint;
+//import com.etz.pocexaminationapi.pocexaminationapi.annotations.PaperIdConstraint;
+import com.etz.pocexaminationapi.pocexaminationapi.annotations.PaperIdConstraint;
+import com.etz.pocexaminationapi.pocexaminationapi.annotations.StatusValidator;
+import com.etz.pocexaminationapi.pocexaminationapi.annotations.ToUpperCaseDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 
-import java.time.LocalDate;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Data
 public class ExamDto {
@@ -10,10 +18,12 @@ public class ExamDto {
     private String name;
     private String description;
     private String code;
-    private String levels;
+    @StatusValidator()
+    @JsonDeserialize(using = ToUpperCaseDeserializer.class)
     private String status;
     private String certificates;
-    private LocalDate date_established;
-
-
+    @CustomDateConstraint
+    private String date_established;
+    @PaperIdConstraint
+    private Long paper;
 }

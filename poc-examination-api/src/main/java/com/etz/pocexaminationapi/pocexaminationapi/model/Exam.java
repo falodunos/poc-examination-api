@@ -1,19 +1,24 @@
 package com.etz.pocexaminationapi.pocexaminationapi.model;
 
+import com.etz.pocexaminationapi.pocexaminationapi.annotations.CustomDateConstraint;
+import com.etz.pocexaminationapi.pocexaminationapi.annotations.PaperIdConstraint;
+import com.etz.pocexaminationapi.pocexaminationapi.annotations.StatusValidator;
+import com.etz.pocexaminationapi.pocexaminationapi.annotations.ToUpperCaseDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 
 @Entity
+@EntityListeners(EntityListeners.class)
 @Table(
-        name = "Exam", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}
+        name = "Exam" /**, uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}*/
 )
 public class Exam {
 
@@ -32,16 +37,21 @@ public class Exam {
     @Column(name = "code", nullable = false)
     private String code;
 
-    @Column(name = "levels", nullable = false)
-    private String levels;
+    @ManyToOne
+    @JoinColumn(name = "Paper_id")
+    @PaperIdConstraint
+    private Paper paper;
 
     @Column(name = "status", nullable = false)
+    @JsonDeserialize(using = ToUpperCaseDeserializer.class)
+    @StatusValidator()
     private String status;
 
     @Column(name = "certificates", nullable = false)
     private String certificates;
 
     @Column(name = "date_established", nullable = false)
-    private LocalDate date_established;
+    @CustomDateConstraint
+    private String date_established;
 
 }

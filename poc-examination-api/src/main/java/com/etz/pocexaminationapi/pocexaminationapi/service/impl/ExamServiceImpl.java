@@ -4,6 +4,7 @@ import com.etz.pocexaminationapi.pocexaminationapi.exception.ResourceNotFoundExc
 import com.etz.pocexaminationapi.pocexaminationapi.model.Exam;
 import com.etz.pocexaminationapi.pocexaminationapi.payload.ExamDto;
 import com.etz.pocexaminationapi.pocexaminationapi.repository.ExamRepository;
+import com.etz.pocexaminationapi.pocexaminationapi.repository.PaperRepository;
 import com.etz.pocexaminationapi.pocexaminationapi.service.ExamService;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 public class ExamServiceImpl implements ExamService {
 
     private ExamRepository examRepository;
+    private PaperRepository paperRepository;
 
-    public ExamServiceImpl(ExamRepository examRepository) {
+    public ExamServiceImpl(ExamRepository examRepository, PaperRepository paperRepository) {
         this.examRepository = examRepository;
+        this.paperRepository = paperRepository;
     }
 
     @Override
@@ -52,7 +55,7 @@ public class ExamServiceImpl implements ExamService {
         exam.setName(examDto.getName());
         exam.setDescription(examDto.getDescription());
         exam.setCode(examDto.getCode());
-        exam.setLevels(examDto.getLevels());
+        exam.setPaper(paperRepository.getReferenceById((examDto.getPaper())));
         exam.setStatus(examDto.getStatus());
         exam.setCertificates(examDto.getCertificates());
         exam.setDate_established(examDto.getDate_established());
@@ -75,8 +78,8 @@ public class ExamServiceImpl implements ExamService {
         examDto.setName(exam.getName());
         examDto.setDescription(exam.getDescription());
         examDto.setCode(exam.getCode());
-        examDto.setLevels(exam.getLevels());
-        examDto.setStatus(exam.getLevels());
+        examDto.setPaper((exam.getPaper().getId()));
+        examDto.setStatus(exam.getStatus());
         examDto.setCertificates(exam.getCertificates());
         examDto.setDate_established(exam.getDate_established());
         return examDto;
@@ -88,7 +91,7 @@ public class ExamServiceImpl implements ExamService {
         exam.setName(examDto.getName());
         exam.setDescription(examDto.getDescription());
         exam.setCode(examDto.getCode());
-        exam.setLevels(examDto.getLevels());
+        exam.setPaper(paperRepository.getReferenceById(examDto.getPaper()));
         exam.setStatus(examDto.getStatus());
         exam.setCertificates(examDto.getCertificates());
         exam.setDate_established(examDto.getDate_established());
