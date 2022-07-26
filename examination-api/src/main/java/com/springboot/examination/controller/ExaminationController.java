@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class ExaminationController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<ExaminationDto> createRecord(@RequestBody ExaminationDto examinationDto) {
+    public ResponseEntity<ExaminationDto> createRecord(@Valid @RequestBody ExaminationDto examinationDto) {
         return new ResponseEntity<>(examinationService.createRecord(examinationDto), HttpStatus.CREATED);
     }
 
@@ -44,5 +45,11 @@ public class ExaminationController {
 
         return new ResponseEntity<>("Examination registration was successfully deleted", HttpStatus.OK);
     }
+
+//    DateTimeFormatter dateFormatter = DateTimeFormatter.BASIC_ISO_DATE;
+//    DateValidator validator = new DateValidatorUsingLocalDate(dateFormatter);
+//
+//    assertTrue(validator.isValid("20190228"));
+//    assertFalse(validator.isValid("20190230"));
 
 }

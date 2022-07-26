@@ -1,10 +1,18 @@
 package com.springboot.examination.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.springboot.examination.annotation.CustomDateValidator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.datetime.DateFormatter;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -16,7 +24,7 @@ public class Examination {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long exam_id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -27,8 +35,10 @@ public class Examination {
     @Column(nullable = false)
     private String code;
 
-    @Column(nullable = false)
-    private String levels;
+//    @Column(nullable = false)
+    @OneToOne(targetEntity = Levels.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "el_fk", referencedColumnName = "levels_id")
+    private Levels levels;
 
     @Column(nullable = false)
     private String status;
@@ -36,6 +46,7 @@ public class Examination {
     @Column(nullable = false)
     private String certificates;
 
-    @Column(nullable = false)
+//    @CustomDateValidator
+    @Column(nullable = false, name = "date_established")
     private String dateEstablished;
 }
